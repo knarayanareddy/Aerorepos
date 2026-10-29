@@ -2,6 +2,12 @@
 
 A curated, static directory of open-source aerospace engineering projects. Explore aerodynamics, propulsion, turbomachinery, structures, design optimization, flight dynamics, space systems and supporting simulation infrastructure. This is a starting collection, **not an exhaustive inventory**. The focus labels and descriptions are editorial; repository statistics are snapshots and do not imply endorsement, validation, or fitness for a particular engineering application.
 
+## Explore online
+
+**GitHub Pages:** [knarayanareddy.github.io/Aerorepos](https://knarayanareddy.github.io/Aerorepos/) (available after Pages finishes deploying).
+
+The Pages edition runs entirely in your browser using the committed JSON catalog and repository snapshots. The ecosystem map, search, project profiles and source-tree explorer work without a backend. The SQLite API, Reboot service, live harvesting and generative RAG do not run on GitHub Pages; catalog data and repository metrics are snapshots.
+
 ## Explore locally
 
 ```sh
@@ -68,3 +74,9 @@ Each catalog project's profile links to a repository explorer showing the actual
 At startup, the server validates and atomically replaces its database index with the current checked-in catalog and available snapshot JSON files. Rerun the indexer and restart the server to ingest changed snapshots. The database is generated at `data/aerorepos.sqlite3` and is Git-ignored; the JSON files remain the source of truth. An invalid snapshot prevents startup rather than replacing a good existing index. Test with `python3 -m unittest discover -s tests`.
 
 The server is read-only and binds to localhost by default. For a sandbox preview use `python3 server/app.py --host 0.0.0.0 --port 8001`. It is intended for local exploration, not a hardened production deployment. It does not offer authentication, background harvesting, source-content retrieval, generative RAG, or the durable workflow and MCP features of Reboot. The experimental Reboot scaffold remains separate and is not used by this server.
+
+## Publishing on GitHub Pages
+
+The repository is a static site and can be published from the repository root: in **Settings → Pages**, select **Deploy from a branch**, select the branch to publish and `/ (root)`, then save. `.nojekyll` keeps GitHub Pages from processing the snapshot files. Relative asset paths support the `/Aerorepos/` project-site base path. `runtime-config.js` selects static JSON when served from Pages; the local SQLite server supplies its own configuration to use the API.
+
+If Pages is initially configured to publish from a working branch, switch its source to `main` after those changes are merged so subsequent merged updates are published. Pages deployments may take a few minutes. Do not add private or sensitive files to a branch being published: the repository and static site are public.

@@ -69,6 +69,8 @@ def handler_for(db_path, root=ROOT):
 
         def do_GET(self):
             request = urlsplit(self.path)
+            if request.path == '/runtime-config.js':
+                return self.send_body(200, 'text/javascript; charset=utf-8', b'window.AEROREPOS_STATIC = false;\n')
             if request.path == '/api/health':
                 return self.json_response(200, {'status': 'ok'})
             if request.path in ('/api/catalog', '/api/snapshot'):
