@@ -43,6 +43,7 @@ class ServerTest(unittest.TestCase):
         self.assertEqual(json.loads(self.get('/api/catalog')), self.catalog)
         self.assertEqual(json.loads(self.get('/api/snapshot?' + urlencode({'repo': 'owner/repo'}))), self.snapshot)
         self.assertEqual(self.get('/'), b'hello')
+        self.assertEqual(self.get('/runtime-config.js'), b'window.AEROREPOS_STATIC = false;\n')
 
     def test_missing_and_private_paths(self):
         for path in ('/api/snapshot?repo=missing', '/.git/config', '/data/test.sqlite3', '/server/app.py', '/%2e%2e/server/app.py'):
